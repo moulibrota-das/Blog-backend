@@ -17,7 +17,7 @@ const register = (async (req: Request, res: Response)=>{
     const hashPassword : string = await bcrypt.hash(userData.password, 10);
     //todo: add email validator
 
-    const createUser = await prisma.users.create({
+    const user = await prisma.users.create({
       data: {
         email : userData.email,
         name: userData.name,
@@ -25,8 +25,8 @@ const register = (async (req: Request, res: Response)=>{
       },
     })
 
-    const token = jwt.sign({userId: createUser.id}, process.env.TOKEN_KEY);
-    res.status(200).json(token);
+    const token = jwt.sign({userId: user.id}, process.env.TOKEN_KEY);
+    res.status(200).json({id:user.id, name: user.name, email: user.email, token: token});
   } catch (error) {
     console.log(error);
     res.status(400).send(error)
@@ -35,6 +35,7 @@ const register = (async (req: Request, res: Response)=>{
 
 //login
 const login = (async (req: Request, res: Response)=>{
+  console.log("login req received")
   try {
     const {email, password} = req.body;
     const user = await prisma.users.findUnique({
@@ -53,7 +54,7 @@ const login = (async (req: Request, res: Response)=>{
     }
 
     const token = jwt.sign({userId: user.id}, process.env.TOKEN_KEY);
-    res.status(200).json(token);
+    res.status(200).json({id:user.id, name: user.name, email: user.email, token: token});
   } catch (error) {
     res.status(400).send(error)
   }
