@@ -26,7 +26,7 @@ const register = (async (req: Request, res: Response)=>{
     })
 
     const token = jwt.sign({userId: user.id}, process.env.TOKEN_KEY);
-    res.status(200).send({...user, token: token});
+    res.status(200).json({...user, token});
   } catch (error) {
     console.log(error);
     res.status(400).send(error)
@@ -54,7 +54,7 @@ const login = (async (req: Request, res: Response)=>{
     }
 
     const token = jwt.sign({userId: user.id}, process.env.TOKEN_KEY);
-    res.status(200).send({...user, token: token});
+    res.status(200).json({...user, token});
   } catch (error) {
     res.status(400).send(error)
   }

@@ -16,7 +16,7 @@ app.listen(PORT, ()=> console.log(`server ${pid} up and running`));
 dotenv.config();
 app.use(express.json())
 app.use(cors({
-  origin: 'http://127.0.0.1:3000',
+  origin: 'http://localhost:3000',
 }))
 console.log('kafka user :', process.env.KAFKA_USER);
 
