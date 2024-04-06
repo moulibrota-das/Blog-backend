@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["fullTextSearch", "fullTextIndex", "relationJoins"]
 }
 
 datasource db {
@@ -9,20 +9,32 @@ datasource db {
 }
 
 model Users {
-  id         String   @id @default(uuid())
-  email      String   @unique
+  id         String     @id @default(uuid())
+  email      String     @unique
   name       String
   password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   Blogs      Blogs[]
+  Bookmark   Bookmark[]
 }
 
 model Blogs {
-  id          String @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   description String
   content     String
   authorId    String
-  author      Users  @relation(fields: [authorId], references: [id])
+  author      Users      @relation(fields: [authorId], references: [id])
+  Bookmark    Bookmark[]
+}
+
+model Bookmark {
+  user_id   String
+  blog_id   String
+  user      Users    @relation(fields: [user_id], references: [id])
+  blog      Blogs    @relation(fields: [blog_id], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([user_id, blog_id])
 }

@@ -10,6 +10,7 @@ const cors = require('cors')
 const authRoute = require('./routes/auth.routes')
 const blogRoute = require('./routes/blog.routes')
 const userRoute = require('./routes/user.routes')
+const bookmarkRoute = require('./routes/bookmark.routes')
 
 app.listen(PORT, ()=> console.log(`server ${pid} up and running`));
 
@@ -26,6 +27,7 @@ app.get('/', (req:Request, res:Response) => {
 app.use('/auth', authRoute);
 app.use('/blog', blogRoute);
 app.use('/user', userRoute);
+app.use('/bookmark', bookmarkRoute);
 
 // consumeMessage();
 

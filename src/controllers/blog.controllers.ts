@@ -9,7 +9,7 @@ type Blog = {
   authorId : string
 }
 
-//get all blogs
+// get all blogs
 const getAllBlog = (async (req:Request, res:Response)=>{
   try {
     const blogs = await prisma.blogs.findMany({
@@ -27,7 +27,7 @@ const getAllBlog = (async (req:Request, res:Response)=>{
   }
 })
 
-//get blog by id
+// get blog by id
 const getBlog = (async (req:Request, res:Response)=>{
   try {
     const id = req.params.id;
@@ -64,7 +64,7 @@ const getBlog = (async (req:Request, res:Response)=>{
   }
 })
 
-//get blogs by title search
+// get blogs by title search
 const getBlogByTitle = (async (req:Request, res:Response)=>{
   try {
     const title = req.params.title;
@@ -88,7 +88,7 @@ const getBlogByTitle = (async (req:Request, res:Response)=>{
   }
 })
 
-//add blog
+// add blog
 const addBlog = (async (req:Request, res:Response)=>{
   try {
     const blog : Blog = req.body;
@@ -108,7 +108,7 @@ const addBlog = (async (req:Request, res:Response)=>{
   }
 })
 
-//update a blog
+// update a blog
 const updateBlog = (async (req:Request, res:Response)=>{
   try {
     const blog : Blog = req.body;
@@ -130,7 +130,7 @@ const updateBlog = (async (req:Request, res:Response)=>{
   }
 })
 
-//delete a blog
+// delete a blog
 const deleteBlog = (async (req:Request, res:Response)=>{
   try {
     const id = req.params.id;

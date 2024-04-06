@@ -16,6 +16,10 @@ const register = (async (req: Request, res: Response)=>{
     const userData : User = req.body;
     const hashPassword : string = await bcrypt.hash(userData.password, 10);
     //todo: add email validator
+    if(!userData.name || !userData.email || !userData.password){
+      res.status(400).send("Missing fields");
+      return;
+    }
 
     const user = await prisma.users.create({
       data: {
@@ -38,6 +42,12 @@ const login = (async (req: Request, res: Response)=>{
   console.log("login req received")
   try {
     const {email, password} = req.body;
+
+    if(!email || !password){
+      res.status(400).send("Missing fields");
+      return;
+    }
+
     const user = await prisma.users.findUnique({
       where:{
         email: email
